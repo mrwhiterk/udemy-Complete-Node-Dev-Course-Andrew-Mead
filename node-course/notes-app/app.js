@@ -5,8 +5,6 @@ const { listNotes, addNote, removeNote, readNote } = require('./notes')
 
 // const command = process.argv[2]
 
-// console.log(process.argv);
-
 // customize yargs version
 yargs.version('1.1.0')
 
