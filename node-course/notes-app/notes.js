@@ -9,9 +9,9 @@ module.exports = {
   addNote(title, body) {
     const notes = self.loadNotes()
 
-    const duplicateNotes = notes.filter(note => note.title === title)
-
-    if (!duplicateNotes.length) {
+    const duplicateNote = notes.find(note => note.title === title)
+    
+    if (!duplicateNote) {
       notes.push({
         title,
         body
@@ -27,9 +27,7 @@ module.exports = {
   removeNote (title) {
     const notes = self.loadNotes()
 
-    const filteredNotes = notes.filter(note => {
-      return note.title !== title
-    })
+    const filteredNotes = notes.filter(note => note.title !== title)
 
     if (filteredNotes.length < notes.length) {
 
@@ -54,6 +52,12 @@ module.exports = {
     } catch (e) {
       return []
     }
+  },
+
+  listNotes() {
+    console.log(chalk.bold.inverse('\nYour notes\n'))
+    const notes = self.loadNotes()
+    notes.forEach(note => console.log(chalk.yellow.inverse(`title: ${note.title} \nbody: ${note.body}\n`)))
   }
 }
 

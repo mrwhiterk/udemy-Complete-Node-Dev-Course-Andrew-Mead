@@ -1,7 +1,7 @@
 let chalk = require('chalk')
 let yargs = require('yargs')
 
-const { getNotes, addNote, removeNote } = require('./notes')
+const { listNotes, addNote, removeNote } = require('./notes')
 
 // const command = process.argv[2]
 
@@ -53,7 +53,7 @@ yargs.command({
   command: 'list',
   describe: 'list notes',
   handler() {
-    console.log('listing notes');
+    listNotes()
   }
 })
 
