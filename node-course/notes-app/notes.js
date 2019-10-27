@@ -2,16 +2,14 @@ const fs = require('fs')
 let chalk = require('chalk')
 
 module.exports = {
-  getNotes: function() {
+  getNotes() {
     return 'notes..'
   },
 
-  addNote: function(title, body) {
+  addNote(title, body) {
     const notes = self.loadNotes()
 
-    const duplicateNotes = notes.filter(note => {
-      return note.title === title
-    })
+    const duplicateNotes = notes.filter(note => note.title === title)
 
     if (!duplicateNotes.length) {
       notes.push({
@@ -26,7 +24,7 @@ module.exports = {
     }
   },
 
-  removeNote: function (title) {
+  removeNote (title) {
     const notes = self.loadNotes()
 
     const filteredNotes = notes.filter(note => {
@@ -43,12 +41,12 @@ module.exports = {
 
   },
 
-  saveNotes: function(notes) {
+  saveNotes(notes) {
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJSON)
   },
 
-  loadNotes: function() {
+  loadNotes() {
     try {
       const dataBuffer = fs.readFileSync('notes.json')
       const dataJSON = dataBuffer.toString()
