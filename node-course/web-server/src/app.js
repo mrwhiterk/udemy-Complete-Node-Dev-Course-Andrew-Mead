@@ -1,18 +1,10 @@
 const express = require('express')
-
+const path = require('path')
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('<h1>Weather</h1>')
-});
+// __filename  - prints full path of file
 
-app.get('/help', (req, res) => {
-  res.json([1,2])
-});
-
-app.get('/about', (req, res) => {
-  res.send('<h1>About</h1>')
-});
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.get('/weather', (req, res) => {
   res.send({ forecast: 'hot', location: 'bmore'})
