@@ -3,8 +3,12 @@ const path = require('path')
 const app = express()
 
 // __filename  - prints full path of file
+const viewsPath = path.join(__dirname, '../templates')
+
 app.set('view engine', 'hbs')
+app.set('views', viewsPath)
 app.use(express.static(path.join(__dirname, '../public')))
+
 
 app.get('', (req, res) => {
   res.render('index', {
