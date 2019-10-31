@@ -2,6 +2,13 @@ const express = require('express')
 const path = require('path')
 const app = express()
 const hbs = require('hbs')
+const forecast = require('./utils/forecast')
+const geocode = require('./utils/geocode')
+
+
+
+require('dotenv').config()
+
 
 // tell nodemon to watch saves on hbs files as well
 // nodemon src/app.js -e js,hbs
@@ -46,7 +53,20 @@ app.get('/weather', (req, res) => {
     })
   }
 
-  res.send({ forecast: 'It is snowing', location: 'Philadelphia', address: req.query.address })
+  geocode(req.query.address, (error, { latitude, longitude, location }) => {
+    if (error) throw error
+
+    forecast(latitude, longitude, (error, forecast) => {
+      if (error) throw error
+
+      res.send({
+        location,
+        forecast,
+        address: req.query.address
+      })
+    })
+  })
+
 })
 
 app.get('/products', (req, res) => {
