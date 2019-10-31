@@ -43,6 +43,22 @@ app.get('/weather', (req, res) => {
   res.send({ forecast: 'hot', location: 'bmore' })
 })
 
+app.get('/help/*', (req, res) => {
+  res.render('404_help', {
+    title: '404_Help',
+    name: 'Ryan',
+    errorMessage: 'Help Article not found'
+  })
+});
+
+app.get('*', (req, res) => {
+  res.render('404', {
+    title: '404',
+    name: 'Ryan',
+    errorMessage: 'page not found'
+  })
+});
+
 app.listen(3000, () => {
   console.log('server: 3000')
 })
