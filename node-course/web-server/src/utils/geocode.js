@@ -9,9 +9,9 @@ const geocode = (address, callback) => {
 
   request({ url, json: true }, (err, res) => {
     if (err) {
-      callback('unable to connect to map services', undefined)
-    } else if (!res.body.features.length) {
-      callback(
+      return callback('unable to connect to map services', undefined)
+    } else if (!res.body || !res.body.features.length) {
+      return callback(
         'unable to find location. Try again with different term',
         undefined
       )
