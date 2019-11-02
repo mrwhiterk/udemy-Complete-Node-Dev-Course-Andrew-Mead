@@ -1,7 +1,13 @@
 const weatherForm = document.querySelector('form')
 
+const messageOne = document.querySelector('#message-1')
+const messageTwo = document.querySelector('#message-2')
+
 weatherForm.addEventListener('submit', async e => {
   e.preventDefault()
+
+  messageOne.textContent = 'Loading...'
+  messageTwo.textContent = ''
 
   let { value } = weatherForm.querySelector('input')
 
@@ -9,9 +15,10 @@ weatherForm.addEventListener('submit', async e => {
   const data = await response.json()
 
   if (data.error) {
-    return (document.querySelector('p').innerHTML = data.error)
+    return (messageOne.textContent = data.error)
   }
 
-  document.querySelector('p').innerHTML = `${data.location} \n ${data.forecast}`
+  messageOne.textContent = data.location
+  messageTwo.textContent = data.forecast
 
 })
