@@ -16,16 +16,17 @@ function darkSkyForecast(lat, long, cb) {
         timezone,
         currently: { temperature, precipProbability },
         daily: {
-          data: [{ summary }]
+          data
         }
       } = res.body
+
 
       cb(
         undefined,
 
-        `${summary} It is currently ${temperature} degrees in ${timezone
+        `${data[0].summary} It is currently ${temperature} degrees in ${timezone
           .split('/')[1]
-          .replace('_', ' ')}. There is a ${precipProbability}% chance of rain.`
+          .replace('_', ' ')}. There is a ${precipProbability}% chance of rain. Temp high is ${data[0].temperatureHigh}`
       )
     }
   })
