@@ -29,6 +29,25 @@ app.get('/users', (req, res) => {
     })
 })
 
+app.get('/tasks', (req, res) => {
+  Task.find()
+    .then(tasks => {
+      res.send(tasks)
+    })
+    .then(e => res.status(500).send(e))
+})
+
+app.get('/tasks/:id', (req, res) => {
+  Task.findById(req.params.id)
+    .then(task => {
+      if (!task) return res.send('no task with that id')
+      res.send(task)
+    })
+    .catch(e => {
+      res.status(400).send()
+    })
+})
+
 app.get('/users/:id', (req, res) => {
   const { id } = req.params
   User.findById(id)
