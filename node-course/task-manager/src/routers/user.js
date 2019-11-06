@@ -37,9 +37,9 @@ router.post('/users', async (req, res) => {
 router.post('/users/login', async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
+    // generate a new token for the user who successfully logged in
     const token = await user.generateAuthToken()
 
-    // generate a new token for the user who successfully logged in
 
     res.send({ user, token })
   } catch (error) {

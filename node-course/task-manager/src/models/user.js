@@ -49,6 +49,18 @@ const userSchema = new mongoose.Schema({
   }]
 })
 
+// this works when I use res.send on a user and converts it to JSON
+userSchema.methods.toJSON = function () {
+  const user = this
+
+  const userObject = user.toObject()
+
+  delete userObject.password
+  delete userObject.tokens
+
+  return userObject
+}
+
 // generate a web token that will be used to authenticate users before handling routes
 userSchema.methods.generateAuthToken = async function () {
   const user = this

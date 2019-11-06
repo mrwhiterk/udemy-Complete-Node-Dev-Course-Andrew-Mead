@@ -18,36 +18,52 @@ app.listen(port, () => {
   console.log('server is up on port: ', port)
 })
 
-// const jwt = require('jsonwebtoken')
+/** This is how toJSON works */
+  // const pet = {
+  //   name: 'Hal'
+  // }
 
-// const jsonWebFunc = async () => {
-//   const token = jwt.sign(
-//     {
-//       _id: 'abc123'
-//     },
-//     'thisismynewcourse',
-//     { expiresIn: '7 days' }
-//   )
+  // pet.toJSON = function (params) {
+  //  console.log(this) 
+  //   return {}
+  // }
 
-//   console.log(token)
+  // console.log(JSON.stringify(pet))
 
-//   const data = jwt.verify(token, 'thisismynewcourse')
-//   console.log(data)
-// }
+/** jwt basics */
 
-// jsonWebFunc()
+  // const jwt = require('jsonwebtoken')
 
-// const bcrypt = require('bcryptjs')
+  // const jsonWebFunc = async () => {
+  //   const token = jwt.sign(
+  //     {
+  //       _id: 'abc123'
+  //     },
+  //     'thisismynewcourse',
+  //     { expiresIn: '7 days' }
+  //   )
 
-// const myFunc = async () => {
-//   const password = 'red1234!'
+  //   console.log(token)
 
-//   const hashedPassword = await bcrypt.hash(password, 8)
+  //   const data = jwt.verify(token, 'thisismynewcourse')
+  //   console.log(data)
+  // }
 
-//   console.log(password, hashedPassword)
+  // jsonWebFunc()
 
-//   const isMatch = await bcrypt.compare('red1234!', hashedPassword)
-//   console.log(isMatch)
-// }
+/** Bcrypt basics */
 
-// myFunc()
+  // const bcrypt = require('bcryptjs')
+
+  // const myFunc = async () => {
+  //   const password = 'red1234!'
+
+  //   const hashedPassword = await bcrypt.hash(password, 8)
+
+  //   console.log(password, hashedPassword)
+
+  //   const isMatch = await bcrypt.compare('red1234!', hashedPassword)
+  //   console.log(isMatch)
+  // }
+
+  // myFunc()
