@@ -40,7 +40,6 @@ router.post('/users/login', async (req, res) => {
     // generate a new token for the user who successfully logged in
     const token = await user.generateAuthToken()
 
-
     res.send({ user, token })
   } catch (error) {
     res.status(400).send(error)
@@ -85,7 +84,6 @@ router.patch('/users/me', auth, async (req, res) => {
   }
 
   try {
-
     updates.forEach(update => (req.user[update] = req.body[update]))
 
     await req.user.save()
@@ -100,7 +98,6 @@ router.patch('/users/me', auth, async (req, res) => {
 router.delete('/users/me', auth, async (req, res) => {
   try {
     await req.user.remove()
-
     res.send(req.user)
   } catch (error) {
     res.status(500).send(error)
