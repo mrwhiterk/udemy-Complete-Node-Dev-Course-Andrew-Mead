@@ -6,6 +6,10 @@ const taskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT || 3000
 
+const morgan = require('morgan')
+
+app.use(morgan('dev'))
+
 // app.use((req, res, next) => {
 //   console.log(req.method, req.path)
 //   if (req.method === 'GET') {
@@ -14,7 +18,6 @@ const port = process.env.PORT || 3000
 //     next()
 //   }
 // })
-
 
 app.use(express.json())
 app.use(userRouter)
@@ -35,7 +38,10 @@ const jsonWebFunc = async () => {
     { expiresIn: '7 days' }
   )
 
+  console.log(token)
+
   const data = jwt.verify(token, 'thisismynewcourse')
+  console.log(data)
 }
 
 jsonWebFunc()
