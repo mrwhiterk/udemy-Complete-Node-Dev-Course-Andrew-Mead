@@ -10,15 +10,6 @@ const morgan = require('morgan')
 
 app.use(morgan('dev'))
 
-// app.use((req, res, next) => {
-//   console.log(req.method, req.path)
-//   if (req.method === 'GET') {
-//     res.send('GET requests are disabled')
-//   } else {
-//     next()
-//   }
-// })
-
 app.use(express.json())
 app.use(userRouter)
 app.use(taskRouter)
@@ -27,24 +18,24 @@ app.listen(port, () => {
   console.log('server is up on port: ', port)
 })
 
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 
-const jsonWebFunc = async () => {
-  const token = jwt.sign(
-    {
-      _id: 'abc123'
-    },
-    'thisismynewcourse',
-    { expiresIn: '7 days' }
-  )
+// const jsonWebFunc = async () => {
+//   const token = jwt.sign(
+//     {
+//       _id: 'abc123'
+//     },
+//     'thisismynewcourse',
+//     { expiresIn: '7 days' }
+//   )
 
-  console.log(token)
+//   console.log(token)
 
-  const data = jwt.verify(token, 'thisismynewcourse')
-  console.log(data)
-}
+//   const data = jwt.verify(token, 'thisismynewcourse')
+//   console.log(data)
+// }
 
-jsonWebFunc()
+// jsonWebFunc()
 
 // const bcrypt = require('bcryptjs')
 
