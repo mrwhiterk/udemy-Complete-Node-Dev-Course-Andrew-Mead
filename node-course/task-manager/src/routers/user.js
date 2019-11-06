@@ -1,19 +1,13 @@
 const express = require('express')
 const router = new express.Router()
+const auth = require('../middleware/auth')
 const User = require('../models/user')
 
-router.get('/users', async (req, res) => {
-  try {
-    let users = await User.find()
-    if (!users) return res.status(404).send()
-    res.send(users)
-  } catch (e) {
-    console.log(e)
-    res.status(500).send(e)
-  }
+router.get('/users/me', auth, async (req, res) => {
+  res.send(req.user)
 })
 
-router.get('/users/:id', async (req, res) => {
+router.get('/users/:id', auth, async (req, res) => {
   const { id } = req.params
   try {
     let user = await User.findById(id)
@@ -26,6 +20,7 @@ router.get('/users/:id', async (req, res) => {
   }
 })
 
+//signup
 router.post('/users', async (req, res) => {
   const user = new User(req.body)
   const token = await user.generateAuthToken()
@@ -37,6 +32,7 @@ router.post('/users', async (req, res) => {
   }
 })
 
+//signin
 router.post('/users/login', async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -48,7 +44,8 @@ router.post('/users/login', async (req, res) => {
   }
 })
 
-router.patch('/users/:id', async (req, res) => {
+//update
+router.patch('/users/:id', auth, async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = ['name', 'email', 'password', 'age']
   const isValidOperation = updates.every(item => allowedUpdates.includes(item))
@@ -74,7 +71,8 @@ router.patch('/users/:id', async (req, res) => {
   }
 })
 
-router.delete('/users/:id', async (req, res) => {
+//delete
+router.delete('/users/:id', auth, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id)
     if (!user) {
