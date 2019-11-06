@@ -49,14 +49,17 @@ const userSchema = new mongoose.Schema({
   }]
 })
 
+// generate a web token that will be used to authenticate users before handling routes
 userSchema.methods.generateAuthToken = async function () {
   const user = this
 
+  // create token with this object embedded in it and set the string to be the secret that will be used to decode later
   const token = jwt.sign({_id: user._id.toString() }, 'thisismynewcourse')
 
+  // add token to the array of tokens on user model
   user.tokens = user.tokens.concat({ token })
   await user.save()
-  
+
 
   return token
 

@@ -23,6 +23,7 @@ router.get('/users/:id', auth, async (req, res) => {
 //signup
 router.post('/users', async (req, res) => {
   const user = new User(req.body)
+  // a new user comes and gets an jwt generated
   const token = await user.generateAuthToken()
   try {
     await user.save()
@@ -37,6 +38,8 @@ router.post('/users/login', async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
     const token = await user.generateAuthToken()
+
+    // generate a new token for the user who successfully logged in
 
     res.send({ user, token })
   } catch (error) {
