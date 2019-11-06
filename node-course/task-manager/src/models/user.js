@@ -41,16 +41,24 @@ const userSchema = new mongoose.Schema({
       }
     }
   },
-  tokens: [{
-    token: {
-      type: String,
-      required: true
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true
+      }
     }
-  }]
+  ]
+})
+
+userSchema.virtual('tasks', {
+  ref: 'Task',
+  localField: '_id',
+  foreignField: 'owner'
 })
 
 // this works when I use res.send on a user and converts it to JSON
-userSchema.methods.toJSON = function () {
+userSchema.methods.toJSON = function() {
   const user = this
 
   const userObject = user.toObject()
@@ -62,19 +70,17 @@ userSchema.methods.toJSON = function () {
 }
 
 // generate a web token that will be used to authenticate users before handling routes
-userSchema.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = async function() {
   const user = this
 
   // create token with this object embedded in it and set the string to be the secret that will be used to decode later
-  const token = jwt.sign({_id: user._id.toString() }, 'thisismynewcourse')
+  const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
 
   // add token to the array of tokens on user model
   user.tokens = user.tokens.concat({ token })
   await user.save()
 
-
   return token
-
 }
 
 userSchema.statics.findByCredentials = async (email, password) => {

@@ -18,6 +18,23 @@ app.listen(port, () => {
   console.log('server is up on port: ', port)
 })
 
+const Task = require('./models/task')
+const User = require('./models/user')
+
+const main = async () => {
+  // const task = await Task.findById('5dc2ec88f83bbaa7d498f41b')
+  // await task.populate('owner').execPopulate()
+  // console.log(task)
+
+  const user = await User.findById('5dc2ebb673c34fa77593f987')
+  await user.populate('tasks').execPopulate()
+  console.log(user.tasks)
+  
+}
+
+main()
+
+
 /** This is how toJSON works */
   // const pet = {
   //   name: 'Hal'
