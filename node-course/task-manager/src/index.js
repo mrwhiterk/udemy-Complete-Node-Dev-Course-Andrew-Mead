@@ -1,5 +1,7 @@
 require('./db/mongoose')
 
+// mongodb+srv://mrwhiterk:<password>@cluster0-uzkiv.mongodb.net/test
+
 const express = require('express')
 const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task')
