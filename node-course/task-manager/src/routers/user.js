@@ -4,6 +4,7 @@ const auth = require('../middleware/auth')
 const User = require('../models/user')
 const multer = require('multer')
 const sharp = require('sharp')
+const { sendCancellationEmail, sendWelcomeEmail } = require('../emails/account')
 
 router.get('/users/me', auth, async (req, res) => {
   res.send(req.user)
@@ -26,9 +27,10 @@ router.get('/users/me', auth, async (req, res) => {
 router.post('/users', async (req, res) => {
   const user = new User(req.body)
   // a new user comes and gets an jwt generated
-  const token = await user.generateAuthToken()
   try {
     await user.save()
+    sendWelcomeEmail(user.email, user.name)
+    const token = await user.generateAuthToken()
     res.status(201).send({ user, token })
   } catch (e) {
     res.status(400).send(e)
@@ -100,6 +102,7 @@ router.patch('/users/me', auth, async (req, res) => {
 router.delete('/users/me', auth, async (req, res) => {
   try {
     await req.user.remove()
+    sendCancellationEmail(req.user.email, req.user.name)
     res.send(req.user)
   } catch (error) {
     res.status(500).send(error)
@@ -139,7 +142,7 @@ router.post(
 
 router.delete('/users/me/avatar', auth, async (req, res) => {
   req.user.avatar = undefined
-
+    
   await req.user.save()
 
   res.send()

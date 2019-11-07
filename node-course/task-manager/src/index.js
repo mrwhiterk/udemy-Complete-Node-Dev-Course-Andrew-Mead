@@ -4,8 +4,19 @@ const express = require('express')
 const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task')
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
+const morgan = require('morgan')
+
+app.use(morgan('dev'))
+
+app.use(express.json())
+app.use(userRouter)
+app.use(taskRouter)
+
+app.listen(port, () => {
+  console.log('server is up on port: ', port)
+})
 // const multer = require('multer')
 
 // const upload = multer({
@@ -38,17 +49,7 @@ const port = process.env.PORT || 3000
 // }
 // )
 
-const morgan = require('morgan')
 
-app.use(morgan('dev'))
-
-app.use(express.json())
-app.use(userRouter)
-app.use(taskRouter)
-
-app.listen(port, () => {
-  console.log('server is up on port: ', port)
-})
 
 // const Task = require('./models/task')
 // const User = require('./models/user')
