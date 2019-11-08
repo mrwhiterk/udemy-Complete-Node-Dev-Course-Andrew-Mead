@@ -1,2 +1,3 @@
 config/dev.env
 playground
+node_modules/
